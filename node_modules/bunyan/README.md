@@ -171,7 +171,7 @@ streams at different levels**.
         },
         {
           level: 'error',
-          path: '/var/log/myapp-error.log'  // log ERROR and above to a file
+          path: '/var/tmp/myapp-error.log'  // log ERROR and above to a file
         }
       ]
     });
@@ -266,7 +266,7 @@ Or this:
         serializers: {req: bunyan.stdSerializers.req}
     });
 
-because Buyan includes a small set of standard serializers. To use all the
+because Bunyan includes a small set of standard serializers. To use all the
 standard serializers you can use:
 
     var log = bunyan.createLogger({
@@ -817,6 +817,12 @@ This example emits:
   [mcavage/node-bunyan-syslog](https://github.com/mcavage/node-bunyan-syslog)
   provides support for directing bunyan logging to a syslog server.
 
+- bunyan-slack:
+[qualitybath/bunyan-slack](https://github.com/qualitybath/bunyan-slack) Bunyan stream for Slack chat integration.
+
+- bunyan-fogbugz
+[qualitybath/bunyan-fogbugz](https://github.com/qualitybath/bunyan-fogbugz) Bunyan stream for sending automated crash reports to FogBugz
+
 - TODO: eventually https://github.com/trentm/node-bunyan-winston
 
 
@@ -995,17 +1001,14 @@ For some, the raw log records might not be desired. To have a rendered log line
 you'll want to add your own stream, starting with something like this:
 
 ```javascript
+var bunyan = require('./lib/bunyan');
+
 function MyRawStream() {}
 MyRawStream.prototype.write = function (rec) {
-    var nameFromLevel = {
-        TRACE: 'TRACE'
-        DEBUG: 'DEBUG',
-        INFO: 'INFO',
-        WARN: 'WARN',
-        ERROR: 'ERROR',
-        FATAL: 'FATAL'
-    };
-    console.log('[%s] %s: %s', rec.time, nameFromLevel[rec.level], rec.msg);
+    console.log('[%s] %s: %s',
+        rec.time.toISOString(),
+        bunyan.nameFromLevel[rec.level],
+        rec.msg);
 }
 
 var log = bunyan.createLogger({
@@ -1015,7 +1018,7 @@ var log = bunyan.createLogger({
             level: 'info',
             stream: new MyRawStream(),
             type: 'raw'
-        },
+        }
     ]
 });
 
