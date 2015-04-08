@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 # This script generates a commit that updates the citoid submodule
-# ./bin/updateSubmodule.sh        updates to master
-# ./bin/updateSubmodule.sh hash   updates to specified hash
+# updateSubmodule.sh        updates to master
+# updateSubmodule.sh hash   updates to specified hash
 
+cd $(dirname $0)/..;
 
 # Check that both working directories are clean
 if git status -uno --ignore-submodules | grep -i changes > /dev/null
@@ -25,6 +26,8 @@ git checkout -B sync-repos origin/master
 git submodule update
 cd src
 git fetch origin
+# inspect what has changed
+flist=$(git diff --name-only origin/master);
 
 # Figure out what to set the submodule to
 if [ "x$1" != "x" ]
@@ -49,9 +52,19 @@ END
 # Check out master citoid
 git checkout $TARGET
 
-# Commit
+# rebuild the modules if package.json has changed
 cd ..
-git commit src -m "$COMMITMSG" > /dev/null
+if echo -e "${flist}" | grep -i package.json > /dev/null; then
+	git rm node_modules;
+	rm -rf node_modules;
+	npm install;
+	find node_modules/ -iname '.git*' -exec rm -rf {} \;
+	git add node_modules;
+fi
+
+# Commit
+git add src;
+git commit -m "$COMMITMSG" > /dev/null
 if [ "$?" == "1" ]
 then
 	echo >&2 "No changes"
