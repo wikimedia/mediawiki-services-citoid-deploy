@@ -55,7 +55,7 @@ git checkout $TARGET
 # rebuild the modules if package.json has changed
 cd ..
 if echo -e "${flist}" | grep -i package.json > /dev/null; then
-	git rm node_modules;
+	git rm -r node_modules;
 	rm -rf node_modules;
 	npm install;
 	find node_modules/ -iname '.git*' -exec rm -rf {} \;
