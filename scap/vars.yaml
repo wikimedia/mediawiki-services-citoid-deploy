@@ -15,8 +15,6 @@ metrics_port: 8125
 name: citoid
 port: 1970
 proxy: 
-mwapi_uri: http://localhost/w/api.php
-restbase_uri: http://localhost:7231
 zotero_host: localhost
 zotero_port: 1969
 

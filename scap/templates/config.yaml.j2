@@ -50,7 +50,7 @@ services:
       # content for the CSP headers
       # csp: false  # uncomment this line to disable sending them
       # URL of the outbound proxy to use (complete with protocol)
-      proxy: <%= proxy %>
+      proxy: <%= proxy if proxy else '' %>
       # the list of domains for which not to use the proxy defined above
       # no_proxy_list:
       #   - domain1.com
@@ -65,30 +65,16 @@ services:
       #   - if-match
       #   - user-agent
       #   - x-request-id
-			# User-Agent HTTP header to use for requests
-			userAgent: "Citoid (Wikimedia tool; learn more at https://www.mediawiki.org/wiki/Citoid)"
-			# URL where to contact Zotero
-			zoteroInterface: <%= @zotero_host %>
-			# zotero's server port
-			zoteroPort: <%= @zotero_port %>
-			# whether the proxy should be used to contact zotero
-			zoteroUseProxy: false
-			# whether Citoid is allowed to scrape private IPs
-			allowPrivateAddresses: false
-			# maximum number of redirects allowed
-			maxRedirects: 10
-      mwapi_req:
-        method: post
-        uri: <%= mwapi_uri %>
-        headers:
-          host: '{{request.params.domain}}'
-          user-agent: '{{user-agent}}'
-        body: '{{ default(request.query, {}) }}'
-      # the template used for contacting RESTBase
-      restbase_req:
-        method: '{{request.method}}'
-        uri: <%= restbase_uri %>/{{domain}}/v1/{+path}
-        query: '{{ default(request.query, {}) }}'
-        headers: '{{request.headers}}'
-        body: '{{request.body}}'
+      # User-Agent HTTP header to use for requests
+      userAgent: "Citoid (Wikimedia tool; learn more at https://www.mediawiki.org/wiki/Citoid)"
+      # URL where to contact Zotero
+      zoteroInterface: <%= zotero_host %>
+      # zotero's server port
+      zoteroPort: <%= zotero_port %>
+      # whether the proxy should be used to contact zotero
+      zoteroUseProxy: false
+      # whether Citoid is allowed to scrape private IPs
+      allowPrivateAddresses: false
+      # maximum number of redirects allowed
+      maxRedirects: 10
 
