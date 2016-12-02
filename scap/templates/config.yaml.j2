@@ -79,4 +79,8 @@ services:
       allowPrivateAddresses: false
       # maximum number of redirects allowed
       maxRedirects: 10
+      # whether to use the WorldCat XISBN service (deprecated)
+      xisbn: false
+      # the WorldCat Search API key to use
+      wskey: '<%= wskey if wskey else '' %>'
 

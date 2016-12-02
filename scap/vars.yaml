@@ -17,4 +17,5 @@ port: 1970
 proxy: 
 zotero_host: localhost
 zotero_port: 1969
+wskey: SzH9M2MhDgFmp0nyi8xKGI62A2Ll3cB4j8krnON0ZJPQqzqm0uo1Du3CNYk7mVllOcujIsWWwLumboHj
 
