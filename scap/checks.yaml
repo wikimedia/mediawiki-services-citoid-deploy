@@ -3,3 +3,11 @@ checks:
     type: nrpe
     stage: restart_service
     command: check_endpoints_citoid
+  depool:
+    type: command
+    stage: promote
+    command: depool-citoid
+  repool:
+    type: command
+    stage: restart_service
+    command: pool-citoid
