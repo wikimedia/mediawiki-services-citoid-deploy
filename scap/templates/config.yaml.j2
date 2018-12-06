@@ -70,7 +70,7 @@ services:
       # contact e-mail address; used for making crossRef requests
       mailto: services@lists.wikimedia.org
       # whether Citoid should use Zotero
-      zotero: true
+      zotero: <%= use_zotero %>
       # URL where to contact Zotero
       zoteroInterface: <%= zotero_host %>
       # zotero's server port

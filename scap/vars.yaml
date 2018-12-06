@@ -15,6 +15,7 @@ metrics_port: 8125
 name: citoid
 port: 1970
 proxy: 
+use_zotero: 'true'
 zotero_host: localhost
 zotero_port: 1969
 wskey: SzH9M2MhDgFmp0nyi8xKGI62A2Ll3cB4j8krnON0ZJPQqzqm0uo1Du3CNYk7mVllOcujIsWWwLumboHj
